@@ -16,15 +16,15 @@ pipeline {
         }
         stage('Docker Image Build') {
             steps {
-                sh 'docker build -t demo .'
+                sh 'docker build -t demokube .'
             }
         }
         stage('Push Docker Image to ECR') {
             steps {
                 withAWS(credentials: 'aws-credentials', region: 'us-east-1') {
                     sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 384806303040.dkr.ecr.us-east-1.amazonaws.com'
-                    sh 'docker tag demo:latest 384806303040.dkr.ecr.us-east-1.amazonaws.com/demo:latest'
-                    sh 'docker push 384806303040.dkr.ecr.us-east-1.amazonaws.com/demo:latest'
+                    sh 'docker tag demokube:latest 384806303040.dkr.ecr.us-east-1.amazonaws.com/demokube:latest'
+                    sh 'docker push 384806303040.dkr.ecr.us-east-1.amazonaws.com/demokube:latest'
                 }
             }
         }
